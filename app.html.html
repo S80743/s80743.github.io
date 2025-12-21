@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Bento Grid - NOR SAFIRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /*
+        * -----------------------------------------------------
+        * 1. Global Styles & Variables
+        * -----------------------------------------------------
+        */
+        :root {
+            --color-bg-light: #f9f9fb;
+            --color-bg-card: #ffffff;
+            --color-border: #e2e8f0;
+            --color-text-primary: #1e293b;
+            --color-text-secondary: #64748b;
+            --color-accent: #1e40af; /* Deep Ocean Blue */
+            --color-lab-btn: #2c5282;
+            --font-primary: 'Inter', sans-serif;
+            --spacing-md: 1.5rem;
+            --spacing-sm: 1rem;
+            --border-radius: 12px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-bg-light);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: var(--spacing-md);
+            min-height: 100vh;
+        }
+
+        /*
+        * -----------------------------------------------------
+        * 2. Bento Grid Layout
+        * -----------------------------------------------------
+        */
+        .bento-grid {
+            display: grid;
+            gap: var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-sm);
+        }
+
+        .bento-card {
+            background-color: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-2px) scale(1.005);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- Desktop Grid Layout --- */
+        @media (min-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: minmax(180px, auto);
+            }
+
+            .card-profile { grid-column: 1 / 3; grid-row: 1 / 3; }
+            .card-location { grid-column: 3 / 4; grid-row: 1 / 2; }
+            .card-tech-stack { grid-column: 3 / 4; grid-row: 2 / 3; }
+            .card-case-study { grid-column: 1 / 2; grid-row: 3 / 4; }
+            .card-hobby { grid-column: 2 / 3; grid-row: 3 / 4; }
+            .card-reflection { grid-column: 3 / 4; grid-row: 3 / 4; }
+            .card-playlist { grid-column: 1 / -1; }
+        }
+
+        @media (max-width: 767px) {
+            .bento-grid { grid-template-columns: 1fr; }
+        }
+
+        /*
+        * -----------------------------------------------------
+        * 3. Card Content Styling
+        * -----------------------------------------------------
+        */
+        .card-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-content { flex-grow: 1; }
+
+        .profile-name { font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; }
+        .profile-program { font-size: 1.25rem; color: var(--color-text-secondary); margin-bottom: 0.5rem; }
+        .profile-tagline { font-style: italic; color: var(--color-accent); font-size: 1rem; margin-bottom: var(--spacing-md); }
+
+        .social-links a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: var(--spacing-sm);
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.2s ease, color 0.2s ease;
+        }
+
+        .social-links a:hover { color: var(--color-accent); border-bottom: 2px solid var(--color-accent); }
+
+        .small-data { font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); }
+        .small-subtitle { font-size: 0.9rem; color: var(--color-text-secondary); margin-top: 0.25rem; }
+        
+        .subject-list { list-style: none; padding: 0; margin: 0; }
+        .subject-list li {
+            background-color: var(--color-bg-light);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-left: 3px solid var(--color-accent);
+        }
+
+        /* --- Case Study Button Styling --- */
+        .case-study-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            height: 100%;
+        }
+
+        .case-study-btn {
+            display: inline-block;
+            background-color: var(--color-lab-btn);
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+        }
+
+        .case-study-btn:hover {
+            background-color: #1a365d;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(44, 82, 130, 0.3);
+            color: #ffffff;
+        }
+
+        .case-study-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .music-placeholder {
+            text-align: center;
+            padding: var(--spacing-md) 0;
+            color: var(--color-text-secondary);
+            background-color: #fafafa;
+            border-radius: 6px;
+            border: 1px dashed var(--color-border);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bento-grid">
+
+        <div class="bento-card card-profile">
+            <header>
+                <div class="card-title">Profile & Info</div>
+            </header>
+            <div class="card-content">
+                <h1 class="profile-name">NOR SAFIRA</h1>
+                <p class="profile-program">B. Sc. Food Science | **Year 1**</p>
+                <p class="profile-tagline">'Innovating food safety.'</p>
+                <p class="profile-program" style="font-size: 1rem; margin-top: 1rem;">University Malaysia Terengganu (UMT)</p>
+            </div>
+            <footer>
+                <div class="social-links">
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">GitHub</a>
+                    <a href="#" target="_blank">UMT Portal</a>
+                </div>
+            </footer>
+        </div>
+
+        <div class="bento-card card-location">
+            <div class="card-title">Current Location</div>
+            <div class="card-content">
+                <p class="small-data">UMT</p>
+                <p class="small-subtitle">Kuala Nerus, Terengganu</p>
+                <p class="small-subtitle" id="current-time">--:--:--</p>
+            </div>
+        </div>
+
+        <div class="bento-card card-tech-stack">
+            <div class="card-title">Key Subjects / Skills</div>
+            <div class="card-content">
+                <ul class="subject-list">
+                    <li>**Food Chemistry**</li>
+                    <li>**Microbiology**</li>
+                    <li>**Excel** (Data Analysis)</li>
+                    <li>**Lab Analysis** Techniques</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bento-card card-case-study">
+            <div class="card-title">Latest Project</div>
+            <div class="card-content case-study-layout">
+                <div>
+                    <p class="small-data">Starch Gelatinization</p>
+                    <p class="small-subtitle">Analyzing texture profiles of local kuih to understand heat/moisture roles.</p>
+                </div>
+                <a href="https://s80743.github.io/lab-timer-app/app.html" target="_blank" class="case-study-btn">
+                    🧪 Try My Lab Timer App
+                </a>
+            </div>
+        </div>
+
+        <div class="bento-card card-hobby">
+            <div class="card-title">Hobby / Activity</div>
+            <div class="card-content">
+                <p class="small-data">Evening Walks</p>
+                <p class="small-subtitle">at **Pantai UMT**</p>
+            </div>
+        </div>
+        
+        <div class="bento-card card-reflection">
+            <div class="card-title">Reflection</div>
+            <div class="card-content">
+                <p style="font-size: 0.95rem; font-weight: 500;">
+                    Sustainable food security is crucial. Optimizing processing methods reduces waste across Malaysia.
+                </p>
+            </div>
+        </div>
+
+        <div class="bento-card card-playlist">
+            <div class="card-title">Focus Playlist</div>
+            <div class="music-placeholder">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRvui9Df7X" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function updateTime() {
+            const timeElement = document.getElementById('current-time');
+            const now = new Date();
+            timeElement.textContent = now.toLocaleTimeString('en-MY', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+
+</body>
+</html>
